@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+
+  <remote name="maxwen"
+           fetch="https://github.com/maxwen" />
+
+  <!-- Begin local repos -->
+  <remove-project path="external/bluetooth/bluedroid" name="CyanogenMod/android_external_bluetooth_bluedroid" />
+  <project path="external/bluetooth/bluedroid" name="bluedroid" remote="maxwen" revision="jb-mr1" />
+</manifest>

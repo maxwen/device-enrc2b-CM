@@ -35,6 +35,7 @@ PRODUCT_COPY_FILES := \
     device/htc/enrc2b/ramdisk/init.scripts.sh:root/init.scripts.sh \
     device/htc/enrc2b/ramdisk/ueventd.rc:root/ueventd.rc \
     device/htc/enrc2b/ramdisk/ueventd.enrc2b.rc:root/ueventd.enrc2b.rc \
+    device/htc/enrc2b/ramdisk/fstab.enrc2b:root/fstab.enrc2b
 
 
 # Prebuilt Audio/GPS/Camera/Wi-Fi configs
@@ -56,11 +57,8 @@ PRODUCT_COPY_FILES += \
     device/htc/enrc2b/configs/asound.conf:system/etc/asound.conf \
     device/htc/enrc2b/configs/audio_policy.conf:system/etc/audio_policy.conf \
     device/htc/enrc2b/configs/bluetooth/bt_vendor.conf:system/etc/bluetooth/bt_vendor.conf \
-    device/htc/enrc2b/configs/enctune.conf:system/etc/enctune.conf
-
-#Testing Configs
-PRODUCT_COPY_FILES += \
-     device/htc/enrc2b/configs/dbus.conf:system/etc/dbus.conf
+    device/htc/enrc2b/configs/enctune.conf:system/etc/enctune.conf \
+    device/htc/enrc2b/configs/sysctl.conf:system/etc/sysctl.conf
 
   # Prebuilt Alsa configs
 PRODUCT_COPY_FILES += \

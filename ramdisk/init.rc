@@ -34,9 +34,12 @@ loglevel 3
     export ANDROID_ROOT /system
     export ANDROID_ASSETS /system/app
     export ANDROID_DATA /data
+    export ANDROID_CACHE /cache
     export ANDROID_STORAGE /storage
     export ASEC_MOUNTPOINT /mnt/asec
     export LOOP_MOUNTPOINT /mnt/obb
+    export TERMINFO /system/etc/terminfo
+    export TERM linux
     export BOOTCLASSPATH /system/framework/core.jar:/system/framework/core-junit.jar:/system/framework/bouncycastle.jar:/system/framework/ext.jar:/system/framework/framework.jar:/system/framework/telephony-common.jar:/system/framework/mms-common.jar:/system/framework/android.policy.jar:/system/framework/services.jar:/system/framework/apache-xml.jar
 
 # Backward compatibility
@@ -54,7 +57,7 @@ loglevel 3
 
     mkdir /system
     mkdir /data 0771 system system
-    mkdir /cache 0770 system cache
+    mkdir /cache 0771 system cache
     mkdir /config 0500 root root
 
     # See storage config details at http://source.android.com/tech/storage/
@@ -125,13 +128,6 @@ loglevel 3
     chmod 0644 /dev/xt_qtaguid
 
 on fs
-# mount mtd partitions
-    # Mount /system rw first to give the filesystem a chance to save a checkpoint
-    mount yaffs2 mtd@system /system
-    mount yaffs2 mtd@system /system ro remount
-    mount yaffs2 mtd@userdata /data nosuid nodev
-    mount yaffs2 mtd@cache /cache nosuid nodev
-
     service scripts /system/bin/sh /init.scripts.sh
         class core
         user root
@@ -147,7 +143,7 @@ on post-fs
 
     # We chown/chmod /cache again so because mount is run as root + defaults
     chown system cache /cache
-    chmod 0770 /cache
+    chmod 0771 /cache
     # We restorecon /cache in case the cache partition has been reset.
     restorecon /cache
 
@@ -226,8 +222,14 @@ on post-fs-data
     mkdir /data/ssh/empty 0700 root root
     mkdir /data/radio 0770 radio radio
 
-    # create dalvik-cache, so as to enforce our permissions
+    # create dalvik-cache and double-check the perms, so as to enforce our permissions
     mkdir /data/dalvik-cache 0771 system system
+    chown system system /data/dalvik-cache
+    chmod 0771 /data/dalvik-cache
+
+    mkdir /cache/dalvik-cache 0771 system system
+    chown system system /cache/dalvik-cache
+    chmod 0771 /cache/dalvik-cache
 
     # create resource-cache and double-check the perms
     mkdir /data/resource-cache 0771 system system
